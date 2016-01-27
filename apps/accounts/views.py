@@ -29,6 +29,11 @@ class Login(View):
     else:
       return render(request, 'accounts/login.html', context)
 
+class Logout(View):
+  def get(self, request):
+    logout(request)
+    return redirect('/accounts/login')
+
 class Register(View):
   form = forms.UserCreationForm
   def get(self, request):

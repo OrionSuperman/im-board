@@ -1,0 +1,19 @@
+Goals: 
+1) A website that will link people who are wanting to play board games.
+2) Visitors to the site will see upcoming games nearby on a map based on geolocation.
+3) Registered users are able to ask for a seat at the gaming table.
+Registered users can search by game, and choose to either host a game, or travel to play.
+4) If a user owns a game, but is unable to host, they can offer to bring games to a game event.
+5) If a user does not own a game they want to play, but is able to host, they can make the event with a tag that game must be brought.
+6) Game events have a seat limit set by the host. The exact location will only be sent after the host has accepted the user's request for a seat. This will prevent more than the desired amount of people from attending.
+7) Users can leave reviews on other users after an event, both for the host and other attendees. This will allow people who are hosting to have some criteria to select who can come.
+8) There should be a 'desired skill' level, aka casual/competitive, that can be specified so that users are paired with others that are wanting the same type of experience.
+9) Time duration of the event being hosted, and/or apx length of the games to be played.
+10) 
+
+Apps to make:
+1: Board games
+2: Location
+3: Reviews
+4: Events
+
