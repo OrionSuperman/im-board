@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.zipcodes',
     'apps.events',
+    'apps.games',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -77,16 +78,16 @@ WSGI_APPLICATION = 'imboard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'imboarddb',
-#         'USER': 'postgres', 
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',
-#         'PORT' : '5432',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'imboarddb',
+        'USER': 'postgres', 
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT' : '5432',
+    }
+}
 
 # DATABASES = {
 #     'default': {

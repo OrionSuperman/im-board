@@ -8,5 +8,5 @@ urlpatterns = patterns('',
   url(r'^success/',login_required(views.Success.as_view(), login_url='/accounts/login'), name='accounts-success'),
   url(r'^login/', views.Login.as_view(), name='accounts-login'),
   url(r'^logout/', views.Logout.as_view(), name='accounts-logout'),
-  url(r'^success-register/', views.Success.as_view(), name='success-register'), 
+  url(r'^success-register/', views.Success.as_view(), name='success-register'),
 )
