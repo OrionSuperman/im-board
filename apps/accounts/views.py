@@ -43,7 +43,7 @@ class Register(View):
     form = self.form(request.POST)
     if form.is_valid():
       form.save()
-      return redirect('/accounts/success')
+      return redirect('/success-register/')
     else:
       context = {'form': form}
       return render(request, 'accounts/register.html')
