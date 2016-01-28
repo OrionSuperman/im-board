@@ -5,5 +5,6 @@ urlpatterns = patterns('',
 	url(r'^', include('apps.accounts.urls')), # we inserted this line!!!
 	url(r'^accounts/', include('apps.accounts.urls')),
 	url(r'^zipcodes/', include('apps.zipcodes.urls')),
+	url(r'^events/', include('apps.events.urls')),
 	url(r'admin/', include(admin.site.urls)),
 )

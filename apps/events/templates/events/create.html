@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	{% load staticfiles %}
+	<link rel='stylesheet' href='{% static 'events/style.css' %}'>
+</head>
+<body>
+
+	<form action ='{% url "events-create" %}' method='post'>
+		{% csrf_token %}
+		{{form.as_p}}
+<!-- 		<input type='hidden' name='host_id' value='{{ User.id }}'> -->
+		<input type='submit' value='Create Event'>
+	</form>
+
+</body>
+</html>

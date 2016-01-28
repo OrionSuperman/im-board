@@ -7,49 +7,51 @@ from django.shortcuts import render, redirect # inserted this line
 from math import radians, cos, sin, asin, sqrt
 #from .models import THE, NAMES, OF, MODELS
 def index(request):
-	zipcodes = open('zipcode.txt')
-	count = 0
-	for line in zipcodes:
-		zipcode1, lat1, lon1, = (item.strip() for item in line.split(',', 2))
-		lat1 = float(lat1)
-		lon1 = float(lon1)
+	# This block of code was to populate the zipcode database. It should not need to be used again, but keeping it for the moment.
+	# zipcodes = open('zipcode.txt')
+	# count = 0
+	# for line in zipcodes:
+	# 	zipcode1, lat1, lon1, = (item.strip() for item in line.split(',', 2))
+	# 	lat1 = float(lat1)
+	# 	lon1 = float(lon1)
 		
-		for line in open('zipcode.txt'):
+	# 	for line in open('zipcode.txt'):
 			
-			zipcode2, lat2, lon2, = (item.strip() for item in line.split(',', 2))
-			if (zipcode1 == zipcode2): 
-				break
-			lat2 = float(lat2)
-			lon2 = float(lon2) 
-			distance = haversine(lon2, lat1, lon2, lat2)
-			if distance < 25:
-				entry = Distance(zipcode1=zipcode1, zipcode2=zipcode2, distance=distance)
-				entry.save()
-				count += 1
-				if count % 1000 == 0:
-					print count
+	# 		zipcode2, lat2, lon2, = (item.strip() for item in line.split(',', 2))
+	# 		if (zipcode1 == zipcode2): 
+	# 			break
+	# 		lat2 = float(lat2)
+	# 		lon2 = float(lon2) 
+	# 		distance = haversine(lon2, lat1, lon2, lat2)
+	# 		if distance < 25:
+	# 			entry = Distance(zipcode1=zipcode1, zipcode2=zipcode2, distance=distance)
+	# 			entry.save()
+	# 			count += 1
+	# 			if count % 1000 == 0:
+	# 				print count
 			
-	print count
+	
+	print "THE DATABASE HASE BEEN BUILT. ALL YE REJOICE!"
  	return render(request, 'zipcodes/index.html') # updated this line 
 
-def haversine(lon1, lat1, lon2, lat2):
-    """
-    Calculate the great circle distance between two points 
-    on the earth (specified in decimal degrees)
-    """
-    # convert decimal degrees to radians 
+# def haversine(lon1, lat1, lon2, lat2):
+#     """
+#     Calculate the great circle distance between two points 
+#     on the earth (specified in decimal degrees)
+#     """
+#     # convert decimal degrees to radians 
 
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-    # haversine formula 
+#     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+#     # haversine formula 
 
-    dlon = lon2 - lon1 
-    dlat = lat2 - lat1 
+#     dlon = lon2 - lon1 
+#     dlat = lat2 - lat1 
 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a)) 
-    km = 6367 * c
-    miles = km / 1.60934
-    return miles
+#     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+#     c = 2 * asin(sqrt(a)) 
+#     km = 6367 * c
+#     miles = km / 1.60934
+#     return miles
 
 def contact_form(request):
 	form = ContactForm() # We instantiate the ContactForm
