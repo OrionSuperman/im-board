@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect # inserted this line
 from math import radians, cos, sin, asin, sqrt
 #from .models import THE, NAMES, OF, MODELS
 def index(request):
+	# api key: AIzaSyCXTgg5SPNPtpUnHUySZRJuNmch4hB06w8
 	# This block of code was to populate the zipcode database. It should not need to be used again, but keeping it for the moment.
 	# zipcodes = open('zipcode.txt')
 	# count = 0
@@ -22,17 +23,18 @@ def index(request):
 	# 			break
 	# 		lat2 = float(lat2)
 	# 		lon2 = float(lon2) 
-	# 		distance = haversine(lon2, lat1, lon2, lat2)
-	# 		if distance < 25:
+	# 		distance = haversine(lon1, lat1, lon2, lat2)
+	# 		if distance < 10:
 	# 			entry = Distance(zipcode1=zipcode1, zipcode2=zipcode2, distance=distance)
 	# 			entry.save()
 	# 			count += 1
 	# 			if count % 1000 == 0:
 	# 				print count
-			
+	# 				print zipcode1
+	context = Distance.objects.filter(zipcode1 = 98101, distance__lte=10)
 	
-	print "THE DATABASE HASE BEEN BUILT. ALL YE REJOICE!"
- 	return render(request, 'zipcodes/index.html') # updated this line 
+	
+ 	return render(request, 'zipcodes/index.html', {'context':context}) # updated this line 
 
 # def haversine(lon1, lat1, lon2, lat2):
 #     """

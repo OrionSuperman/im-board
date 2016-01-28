@@ -1,0 +1,11 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+{% for each in context %}
+	<p>{{each.zipcode1}} is {{each.distance|floatformat}} miles from {{each.zipcode2}}</p>
+
+{% endfor %}
+</body>
+</html>
