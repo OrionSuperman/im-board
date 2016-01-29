@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title></title>
+	{% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+</head>
+<body>
+	{% if request.session.user_id %}
+	<h1>Youre logged in</h1>
+
+	{{request.session.user_id}}
+
+	<br>
+	<br>
+	{% for user in users %}
+		<a href="/user/{{user.id}}">{{user.id}}</a>
+		<br>
+	{% endfor %}
+	<br>
+	<a href='{%url "accounts-logout"%}'>Logout</a>
+
+	{% else %}
+	<div id='container'>
+
+		{% if messages %}
+			{% for message in messages %}
+				{{message}}
+			{% endfor %}
+		{% endif %}
+
+		<div class='login'>
+			{% block login %}
+			{% endblock login %}
+
+		</div>
+
+		<div class='register'>
+			{% block register %}
+			{% endblock register %}
+		</div>
+
+		{% block test %}
+		{% endblock test %}
+
+		{{current_user}}
+	</div>
+	{% endif %}
+</body>
+</html>
