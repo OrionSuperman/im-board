@@ -8,8 +8,8 @@ from django.apps import apps
 
 class Info(models.Model):
 	bio = models.CharField(max_length=200, default="Bio is not Set")
-	city = models.CharField(max_length=50)
-	games = models.CharField(max_length=50)
+	
+	games = models.ManyToManyField(apps.get_app_config('games').models['game'])
 
 	# games = models.ManyToManyField(apps.get_app_config('games').models['game'])
 
@@ -22,6 +22,6 @@ class Address(models.Model):
 	steet2 = models.CharField(max_length=100, default="")
 	city = models.CharField(max_length=100, default="")
 	state = models.CharField(max_length=2, default="")
-	zipcode = models.IntegerField(max_length=5, default="")
+	zipcode = models.IntegerField()
 	user = models.OneToOneField(Info)
 

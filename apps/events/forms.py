@@ -12,7 +12,9 @@ class CustomTimeInput(widgets.TextInput):
     input_type = 'time'
 
 class EventForm(forms.Form):
+	print '*' * 50
 	gameob = apps.get_app_config('games').models['game']
+	print gameob
 
 	event_name = forms.CharField(label='Event Name', max_length=50)	
 	game = forms.ModelMultipleChoiceField(queryset=gameob.objects.all(), label='Games')
@@ -30,13 +32,16 @@ class EventForm(forms.Form):
 			'description',
 		)
 	def save(self):
+		print self.cleaned_data['game']
+		print '*' * 100
 		event_name = self.cleaned_data['event_name']
 		game = apps.get_app_config('games').models['game']
-		game = game.filter(game_title = self.cleaned_data['game'])
+		test = game.objects.filter(game_title="Dominion")
+		date = self.cleaned_data['date']
 		time = self.cleaned_data['time']
 		seats = self.cleaned_data['seats']
 		description = self.cleaned_data['description']
-		event=Event.objects.create(event_name=event_name, game=game, time=time, seats=seats,description=description)
+		event=Event.objects.create(event_name=event_name, date=date, time=time, seats=seats,description=description)
 		return event
 
 
