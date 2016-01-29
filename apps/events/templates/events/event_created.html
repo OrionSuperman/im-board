@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-	{% load staticfiles %}
-	<link rel='stylesheet' href='{% static 'events/style.css' %}'>
-</head>
-<body>
+{% extends "events/base.html" %}
+{% block main_content %}
+<h1>Event created!</h1>
+<h3>Please doublecheck and make sure the event details are correct.</h3>
 
-	<h1>Successfully created an event</h1>
+<p>{{context.event_name}}</p>
+<p>{{context.game}}</p>
 
-</body>
+{% endblock %}

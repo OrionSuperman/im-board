@@ -1,15 +1,20 @@
 from __future__ import unicode_literals
-
+from django.apps import apps
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+# from apps.games.models import Game, GameType
+
+
 
 
 class Event(models.Model):
 	event_name = models.CharField(max_length=50)
 	# host = models.ForeignKey(User)
-	game = models.CharField(max_length=50)
-	time = models.DateTimeField()
+	
+	game = models.ManyToManyField(apps.get_app_config('games').models['game'])
+	date = models.DateField(default = datetime.now())
+	time = models.TimeField()
 	seats = models.IntegerField()
 	description = models.TextField()
 	class Meta:

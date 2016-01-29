@@ -3,6 +3,10 @@ from django.http import HttpResponse, Http404
 from django.views.generic import View
 from django.contrib.auth import forms
 from .forms import EventForm
+from django.apps import apps
+
+
+
 
 class Create_event(View):
 	form = EventForm
@@ -17,7 +21,8 @@ class Create_event(View):
 		form = self.form(request.POST)
 		if form.is_valid():
 			form.save()
-			return render(request, 'events/event_created.html')
+
+			return render(request, 'events/event_created.html', {'context':form})
 		else:
 			context = {
 				'form': form,

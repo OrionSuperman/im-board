@@ -1,0 +1,27 @@
+{% extends "games/base.html" %}
+
+{% block main_content %}
+	<h1>Games</h1>
+	<table class="table table-striped">
+		<tr>
+			<th>Game</th>
+			<th>Min/Max players</th>
+			<th>Game duration</th>
+			<th>Game type(s)</th>
+		</tr>
+	    {% for game in object_list %}
+	    <tr>
+	    	<td>{{game.game_title}}</td>
+	    	<td>{{game.min_players}}-{{game.max_players}}</td>
+	    	<td>{{game.game_length}}</td>
+	    	<td>
+	    		{% for category in game.game_type.all %}
+	    			{{category.category}} /
+	    		{% endfor %}
+	    	</td>
+	    </tr>
+	    {% empty %}
+	       
+	    {% endfor %}
+	</table>
+{% endblock %}

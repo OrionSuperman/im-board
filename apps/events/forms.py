@@ -1,10 +1,23 @@
 from django import forms
 from .models import Event, Participant
+from django.apps import apps
+from django.forms import widgets
+
+
+
+class CustomDateInput(widgets.TextInput):
+    input_type = 'date'
+
+class CustomTimeInput(widgets.TextInput):
+    input_type = 'time'
 
 class EventForm(forms.Form):
+	gameob = apps.get_app_config('games').models['game']
+
 	event_name = forms.CharField(label='Event Name', max_length=50)	
-	game = forms.CharField(label='Game', max_length=50)
-	time = forms.DateTimeField(label='Time and Date')
+	game = forms.ModelMultipleChoiceField(queryset=gameob.objects.all(), label='Games')
+	date = forms.DateField(label='Date', widget=CustomDateInput)
+	time = forms.TimeField(widget=CustomTimeInput, label='Time')
 	seats = forms.IntegerField(label='Number of seats available')
 	description = forms.CharField(label='Description')
 	class Meta:
@@ -18,7 +31,8 @@ class EventForm(forms.Form):
 		)
 	def save(self):
 		event_name = self.cleaned_data['event_name']
-		game = self.cleaned_data['game']
+		game = apps.get_app_config('games').models['game']
+		game = game.filter(game_title = self.cleaned_data['game'])
 		time = self.cleaned_data['time']
 		seats = self.cleaned_data['seats']
 		description = self.cleaned_data['description']
