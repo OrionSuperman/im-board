@@ -55,22 +55,26 @@ class InfoForm(forms.Form):
 		# 	'bio':
 
 		# }
-	def save(self,user_id):
+	def save(self,user_obj):
 
-		print '*' * 100
-		print self.cleaned_data
+		
 
 		bio = self.cleaned_data['bio']
 		city = self.cleaned_data['city']
 		games = self.cleaned_data['game']
 
 		# This creates the user object that we are working with. The +1 is needed, don't remove. For some reason the number pulled is 1 lower than needed, and that was the issue we were experiencing.
-		user_obj = User.objects.get(id=user_id.id)
-		user_int = int(user_obj.id) + 1
+		# print '*' * 100
+		# print user_obj
+		# user_obj = User.objects.get(id=user_obj.id)
+		user_int = int(user_obj.id)
 
 		# Use this section to update the **Info** information
-		info_obj = Info.objects.get(info_user = user_int)
+		print '*' * 100
+		print user_obj
+		info_obj = Info.objects.get(info_user = User.objects.get(id=22))
 		info_obj.bio=bio
+		
 		info_obj.save()
 
 		# Use this section to update the **Game** information

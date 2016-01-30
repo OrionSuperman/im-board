@@ -40,8 +40,10 @@ def userupdate(request, id=None):
   form = InfoForm(request.POST)
   if form.is_valid():
     print "form is valid"
-    
-    form.save(request.user)
+
+    user_obj = User.objects.get(id=id)
+
+    form.save(user_obj)
 
     # obj = form.save(commit=False)
     # obj.user = request.user

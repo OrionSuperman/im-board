@@ -31,7 +31,7 @@
 <form action='/user/{{user.id}}/update' method='POST'>
 	{% csrf_token %}
 	{{form.as_p}}
-	<input type='hidden' name='user_id' value='{{info.id}}'>
+	<input type='hidden' name='user_id' value='{{user.id}}'>
 	<input type='submit' value='Update Profile'>
 </form>
 {% endif %}
