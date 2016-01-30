@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.apps import apps
 
-Game = models.ManyToManyField(apps.get_app_config('games').models['game'])
+
+Game = apps.get_app_config('games').models['game']
+# Zipcode = apps.get_app_config('zipcodes').models['distance']
+GameType = apps.get_app_config('games').models['gametype']
+# Event = apps.get_app_config('events').models['event']
 
 
 class Address(models.Model):
@@ -19,9 +23,8 @@ class Address(models.Model):
 
 class Info(models.Model):
 	bio = models.CharField(max_length=200, default="Bio is not Set")
-	games = models.ManyToManyField(apps.get_app_config('games').models['game'])
 	info_user = models.OneToOneField(User)
 	address = models.OneToOneField(Address)
-	# games = models.ManyToManyField(apps.get_app_config('games').models['game'])
+	games = models.ManyToManyField(Game)
 	class Meta:
 		db_table = 'infos'	

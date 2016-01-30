@@ -18,7 +18,7 @@ class Game(models.Model):
 	game_title = models.TextField(max_length=255)
 	game_image = models.CharField(max_length=255)
 	game_description = models.TextField()
-	min_players = models.FloatField()
+	min_players = models.IntegerField()
 	max_players = models.IntegerField()
 	game_length = models.CharField(max_length=100)
 	game_type = models.ManyToManyField(GameType)

@@ -24,9 +24,8 @@ def index(request):
 
 def userprofile(request, id=None):
   user = User.objects.get(id=id)
-  # info2 = Info.objects.filter(info_user=request.user)
   form = InfoForm()
-  form = InfoForm(request.POST)
+  # form = InfoForm(request.POST)
 
   context = {
     'form': form,

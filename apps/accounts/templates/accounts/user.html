@@ -1,8 +1,5 @@
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends "accounts/base2.html" %}
+{% block main_content %}
 
 <h1>User Profile Page</h1>
 <p>UserName: {{user.username}}</p>
@@ -13,7 +10,11 @@
 
 <p>Bio: {{user.info.bio}}</p>
 <p>City: {{user.info.address.city}}</p>
-<p>Games: {{user.info.games}}</p>
+<p>Games: 
+{% for game in user.info.games.all %}
+  {{game.game_title}}, 
+{% endfor %}
+</p>
 
 
 {% if request.session.user_id == user.id %}
@@ -40,7 +41,7 @@
 
 
 
-<form role="form" class="form-horizontal" action ='{% url "events-create" %}' method="post">{% csrf_token %}
+<form role="form" class="form-horizontal" action ='/user/{{user.id}}/update' method="post">{% csrf_token %}
    <fieldset>
        <legend>{{ title }}</legend>
        {% for field in form %}
@@ -70,13 +71,4 @@
    </div>
 </form>
 
-
-
-
-
-
-
-
-
-</body>
-</html>
+{% endblock %}
