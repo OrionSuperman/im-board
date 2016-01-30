@@ -2,9 +2,10 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Info, Address
+from .models import Info, Address, Review, User_Profile_Review
 from django.forms import widgets
 from django.apps import apps
+
 
 
 Game = apps.get_app_config('games').models['game']
@@ -95,6 +96,14 @@ class InfoForm(forms.Form):
 		# info.games=games
 		return info_obj
 
+
+class ReviewForm(forms.ModelForm):
+	review = forms.CharField(label='Review')
+	created_at = forms.DateTimeField(label='Created at')
+
+	class Meta:
+		model = User_Profile_Review
+		fields = ['review', 'created_at']
 
 
 

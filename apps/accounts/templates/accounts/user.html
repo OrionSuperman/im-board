@@ -36,7 +36,30 @@
 </form>
 {% endif %}
 
+<hr>
+<hr>
 
+
+<form action = "/user/{{user.id}}/review" method = "POST">
+  {% csrf_token %}
+  {{review_form.as_p}}
+  <input type = 'hidden' name = 'profile_page' value = "{{user.id}}">
+  <input type = "submit" value = "Add Review">
+</form>
+
+{% for review in review %}
+  <!-- If filter is used to fetch reviews, the if statement is not needed -->
+  {% if review.reviewed_for == user.id %}
+    <p>{{review.review}}</p>
+    <p>{{review.rating}}</p>
+    <p>{{review.created_at}}</p>
+    <p>{{review.reviewed_by}}</p>
+  <!-- {% endif %} -->
+{% endfor %}
+
+
+<hr>
+<hr>
 
 
 

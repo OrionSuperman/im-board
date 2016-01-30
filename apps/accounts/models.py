@@ -28,3 +28,18 @@ class Info(models.Model):
 	games = models.ManyToManyField(Game)
 	class Meta:
 		db_table = 'infos'	
+
+
+class Review(models.Model):
+
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	review = models.TextField()
+	rating = models.CharField(max_length=1)
+	#still need to add more for the rating field for 1-5.
+	review_by = models.ForeignKey(User, related_name='review_by')
+	# review_for = models.ForeignKey(User)
+
+class User_Profile_Review(Review):
+	user_id = models.ForeignKey(User, related_name='review_for')
+

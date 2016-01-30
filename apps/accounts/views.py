@@ -6,21 +6,38 @@ from django.views.generic import View
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, forms
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, InfoForm
-from .models import Info
+from .forms import RegisterForm, InfoForm, ReviewForm
+from .models import Info, Review, User_Profile_Review
+
+
  # inserted this line
 #from apps.appname.forms import FormName
 #from .models import THE, NAMES, OF, MODELS
 def index(request):
+  review_form = ReviewForm()
+  review =  User_Profile_Review.objects.all()
+  review = Review.objects.filter(user_id = request.user.id)
+  #this first fetch is to get all, and in html, we can filter through an if statement. The second fetch uses filtering.
+
   login_form = forms.AuthenticationForm
   register_form = RegisterForm
   users = User.objects.all()
   context = {
     'login_form':login_form(),
     'register_form':register_form(),
-    'users':users
+    'users':users,
+    'review':review,
+    'review_form':review_form,
   }
   return render(request, 'accounts/index.html',context) # updated this line 
+
+
+def createreview(self, request):
+  # profile_page will be a hidden variable in the review form with a value of {{user.id}}
+  userpage = User.objects.get(id=request.POST['profile_page']) 
+      
+  review = User_Profile_Review.objects.create(user_id=userpage, created_at=request.POST['created_at'], updated_at=request.POST['updated_at'], review=request.POST['review'], rating=request.POST['rating'], review_by=request.user)
+  
 
 def userprofile(request, id=None):
   user = User.objects.get(id=id)
