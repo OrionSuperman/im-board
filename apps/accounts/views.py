@@ -23,15 +23,15 @@ def index(request):
   return render(request, 'accounts/index.html',context) # updated this line 
 
 def userprofile(request, id=None):
-  info = User.objects.get(id=id)
-  info2 = Info.objects.filter(info_user=request.user)
+  user = User.objects.get(id=id)
+  # info2 = Info.objects.filter(info_user=request.user)
   form = InfoForm()
   form = InfoForm(request.POST)
 
   context = {
     'form': form,
-    'info': info,
-    'info2':info2,
+    'user': user,
+    # 'info2':info2,
   }
 
   return render(request,'accounts/user.html', context)
@@ -39,8 +39,9 @@ def userprofile(request, id=None):
 def userupdate(request, id=None):
   print " update"
   form = InfoForm(request.POST)
-  if form.is_valid:
+  if form.is_valid():
     print "form is valid"
+    
     form.save(request.user)
 
     # obj = form.save(commit=False)

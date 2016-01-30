@@ -2,8 +2,9 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Info
+from .models import Info, Address
 from django.forms import widgets
+from django.apps import apps
 
 
 
@@ -38,26 +39,43 @@ class InfoForm(forms.Form):
 
 	bio = forms.CharField(label='Bio', required=False)
 	city = forms.CharField(label='City', required=False)
-	games = forms.CharField(label='Games', required=False)
+	# games = forms.CharField(label='Games', required=False)
 	class Meta:
 		model = Info
-		fields = ('bio', 'city', 'games')
+		fields = (
+			'bio', 
+			'city', 
+			# 'games'
+			)
 		# fields = {
 		# 	'bio':
 
 		# }
-	def save(self,user):
-		print self
-		user = user
+	def save(self,user_id):
+
+		
+
+
 		bio = self.cleaned_data['bio']
 		city = self.cleaned_data['city']
-		games = self.cleaned_data['games']
-		info = Info.objects.get(info_user=user)
-		info.bio=bio
-		info.city=city
-		info.games=games
-		info.save()
-		return info
+		# games = self.cleaned_data['games']
+		user_obj = User.objects.get(id=user_id.id)
+		print '*' * 50
+		print user_obj.id
+		user_int = int(user_obj.id) + 1
+		#This works to update the Info information.
+		info_obj = Info.objects.get(info_user = user_int)
+		info_obj.bio=bio
+		info_obj.save()
+
+		# This works to update the Address information
+		address_obj = info_obj.address
+		address_obj.city = city
+		address_obj.save()
+
+
+		# info.games=games
+		return info_obj
 
 
 

@@ -31,6 +31,8 @@ def index(request):
 	# 			if count % 1000 == 0:
 	# 				print count
 	# 				print zipcode1
+
+	# print "THE DATABASE HAS BEEN BUILT. ALL YE REJOICE"
 	context = Distance.objects.filter(zipcode1 = 98101, distance__lte=10)
 	
 	

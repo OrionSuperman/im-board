@@ -5,23 +5,32 @@
 <body>
 
 <h1>User Profile Page</h1>
-<p>UserName: {{info.username}}</p>
-<p>First Name: {{info.first_name}}</p>
-<p>Last Name: {{info.last_name}}</p>
-<p>Contact: {{info.email}}</p>
-{% for info3 in info2 %}
+<p>UserName: {{user.username}}</p>
+<p>First Name: {{user.first_name}}</p>
+<p>Last Name: {{user.last_name}}</p>
+<p>Contact: {{user.email}}</p>
 
-<P>Bio: {{info3.bio}}</P>
-<p>City: {{info3.city}}</p>
-<p>Games: {{info3.games}}</p>
-{% endfor %}
 
-{% if request.session.user_id == info.id %}
+<p>Bio: {{user.info.bio}}</p>
+<p>City: {{user.info.address.city}}</p>
+<p>Games: {{user.info.games}}</p>
+
+
+{% if request.session.user_id == user.id %}
+<h3>Personal Info, not seen by anyone other than you</h3>
+
+<p>Street1: {{user.info.address.street1}} </p>
+<p>Street2: {{user.info.address.street2}} </p>
+<p>City: {{user.info.address.city}} </p>
+<p>State: {{user.info.address.state}} </p>
+<p>Zip Code: {{user.info.address.zipcode}} </p>
+
+
 <h3>Update Profile</h3>
-<form action='/user/{{info.id}}/update' method='POST'>
+<form action='/user/{{user.id}}/update' method='POST'>
 	{% csrf_token %}
 	{{form.as_p}}
-	<input type='hidden' name='id' value='{{info.id}}'>
+	<input type='hidden' name='user_id' value='{{info.id}}'>
 	<input type='submit' value='Update Profile'>
 </form>
 {% endif %}
