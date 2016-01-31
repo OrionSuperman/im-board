@@ -7,35 +7,49 @@ import datetime
 # from apps.games.models import Game, GameType
 from django.utils import timezone
 
+Game = apps.get_app_config('games').models['game']
+Info = apps.get_app_config('accounts').models['info']
+
+
 
 
 class Event(models.Model):
 	event_name = models.CharField(max_length=50)
-	# host = models.ForeignKey(User)
+	host = models.ForeignKey(User, default = User.objects.get(id=22))
 	
-	game = models.ManyToManyField(apps.get_app_config('games').models['game'])
-	# date = models.DateField(datetime.date.today())
+	games = models.ManyToManyField(apps.get_app_config('games').models['game'])
 	time = models.DateTimeField()
 	seats = models.IntegerField()
+	seats_filled = models.IntegerField()
 	description = models.TextField()
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	def __str__(self):
+		return self.event_name
 	class Meta:
 		db_table = 'events'	
 
 
 class Participant(models.Model):
-	first_name = models.CharField(max_length=50)
-	birthday = models.DateField(auto_now=False)
+	participant = models.ForeignKey(User)
 	contact = models.CharField(max_length=100)
-	bio = models.TextField()
+	event = models.ForeignKey(Event)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	def __str__(self):
+		return self.participant.username
 	class Meta:
 		db_table = 'participants'
 
+class Location(models.Model):
+	event = models.OneToOneField(Event)
+	street1 = models.CharField(max_length=100, default="")
+	street2 = models.CharField(max_length=100, default="")
+	city = models.CharField(max_length=100, default="")
+	state = models.CharField(max_length=2, default="")
+	zipcode = models.IntegerField()
 
-	# def age(self):
-	# 	b_data = self.birthday
-	# 	b_yr = b_data.year
-	# 	b_mo = b_data.month
-	# 	b_dy = b_data.day
-	# 	birthday = datetime(b_yr, b_mo, b_dy)
-	# 	age = int((datetime.now() - birthday).days / 365)
-	# 	return age
+	def __str__(self):
+		return self.event.event_name
+	class Meta:
+		db_table = 'locations'

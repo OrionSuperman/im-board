@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, forms
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, InfoForm, ReviewForm
-from .models import Info, Review, User_Profile_Review
+from .models import Info, Review, Address
 
 
  # inserted this line
@@ -15,42 +15,57 @@ from .models import Info, Review, User_Profile_Review
 #from .models import THE, NAMES, OF, MODELS
 def index(request):
   review_form = ReviewForm()
-  review =  User_Profile_Review.objects.all()
-  review = Review.objects.filter(user_id = request.user.id)
+  review = Review.objects.filter(review_for = request.user)
   #this first fetch is to get all, and in html, we can filter through an if statement. The second fetch uses filtering.
 
   login_form = forms.AuthenticationForm
   register_form = RegisterForm
   users = User.objects.all()
   context = {
-    'login_form':login_form(),
-    'register_form':register_form(),
-    'users':users,
-    'review':review,
-    'review_form':review_form,
+  'login_form':login_form(),
+  'register_form':register_form(),
+  'users':users,
+  'review':review,
+  'review_form':review_form,
   }
   return render(request, 'accounts/index.html',context) # updated this line 
 
 
-def createreview(self, request):
-  # profile_page will be a hidden variable in the review form with a value of {{user.id}}
-  userpage = User.objects.get(id=request.POST['profile_page']) 
-      
-  review = User_Profile_Review.objects.create(user_id=userpage, created_at=request.POST['created_at'], updated_at=request.POST['updated_at'], review=request.POST['review'], rating=request.POST['rating'], review_by=request.user)
-  
+def createreview(request, for_id):
+
+  if not (int(for_id) == int(request.session['user_id'])):
+    # profile_page will be a hidden variable in the review form with a value of {{user.id}}
+    userpage = User.objects.get(id=for_id) 
+
+    review = Review.objects.create(
+        review_for = Info.objects.get(info_user = User.objects.get(id = for_id)),
+        review=request.POST['review'], 
+        rating=request.POST['rating'], 
+        review_by=Info.objects.get(info_user = User.objects.get(id=request.session['user_id']))
+        )
+    return redirect('/user/'+ for_id)
+  else:
+    messages.error(request, "Invalid")
+    return redirect('/user/'+ for_id)
 
 def userprofile(request, id=None):
-  user = User.objects.get(id=id)
-  form = InfoForm()
-  # form = InfoForm(request.POST)
+    user = User.objects.get(id=id)
+    form = InfoForm()
+    review_form = ReviewForm()
 
-  context = {
+    user_obj = User.objects.get(id=id)
+    info_obj = Info.objects.get(info_user = user_obj)
+    reviews = Review.objects.filter(review_for = info_obj)
+   
+
+    context = {
     'form': form,
     'user': user,
-    # 'info2':info2,
-  }
+    'review_form':review_form,
+    'reviews' : reviews,
+    }
 
-  return render(request,'accounts/user.html', context)
+    return render(request,'accounts/user.html', context)
 
 def userupdate(request, id=None):
   print " update"
@@ -62,9 +77,9 @@ def userupdate(request, id=None):
 
     form.save(user_obj)
 
-    # obj = form.save(commit=False)
-    # obj.user = request.user
-    # obj.save()
+  # obj = form.save(commit=False)
+  # obj.user = request.user
+  # obj.save()
 
 
 
@@ -90,8 +105,8 @@ class Login(View):
         # messages.success(request, "Successfully logged in")
         return redirect('/')
       else:
-        messages.error(request, "Invalid")
-        return redirect('/')
+          messages.error(request, "Invalid")
+          return redirect('/')
     else:
         # login_form = forms.AuthenticationForm
         # register_form = forms.UserCreationForm
@@ -108,6 +123,7 @@ class Logout(View):
     return redirect('/')
 
 class Register(View):
+
   form = RegisterForm
   def get(self, request):
     context = {'form': self.form()}
@@ -121,15 +137,12 @@ class Register(View):
       request.session['user_id'] = user2.id
       # messages.success(request, "Successfully Registered")
       return redirect('/')
+
     else:
       messages.error(request, "Invalid Registration")
       return redirect('/')
 
 
 class Success(View):
-  def get(self, request):
-    return render(request, 'accounts/success.html')
-
-
-
-
+    def get(self, request):
+      return render(request, 'accounts/success.html')

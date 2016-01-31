@@ -26,20 +26,30 @@ class Info(models.Model):
 	info_user = models.OneToOneField(User)
 	address = models.OneToOneField(Address)
 	games = models.ManyToManyField(Game)
+	reviews = models.ManyToManyField('self', through='Review', symmetrical=False, related_name='related_to')
+	def __str__(self):
+		return self.info_user.username
 	class Meta:
 		db_table = 'infos'	
 
 
 class Review(models.Model):
 
+	review_by = models.ForeignKey(Info, related_name='reviews_by')
+	review_for = models.ForeignKey(Info, related_name='reviews_for')
+	review = models.TextField()
+	rating = models.IntegerField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	review = models.TextField()
-	rating = models.CharField(max_length=1)
+	
+	def __str__(self):
+		return self.review
+	class Meta:
+		db_table = 'reviews'
+	
 	#still need to add more for the rating field for 1-5.
-	review_by = models.ForeignKey(User, related_name='review_by')
-	# review_for = models.ForeignKey(User)
 
-class User_Profile_Review(Review):
-	user_id = models.ForeignKey(User, related_name='review_for')
+	
+
+
 
