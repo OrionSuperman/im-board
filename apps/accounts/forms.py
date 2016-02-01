@@ -17,6 +17,7 @@ GameType = apps.get_app_config('games').models['gametype']
 class RegisterForm(UserCreationForm):
 	first_name = forms.CharField(label='First Name')
 	last_name = forms.CharField(label='Last Name')
+	zipcode = forms.CharField(label='Zipcode')
 	email = forms.EmailField(label='Email Address')
 	class Meta:
 		model = User
@@ -31,7 +32,7 @@ class RegisterForm(UserCreationForm):
 		user.Info.Address.street1 = ('Not set')
 		user.Info.Address.city = ('Not Set')
 		user.Info.Address.state = ('NA')
-		user.Info.Address.zipcode = (00000)
+		user.Info.Address.zipcode = self.cleaned_data['zipcode']
 
 		if commit:
 			user.save()
@@ -54,7 +55,7 @@ class InfoForm(forms.Form):
 	def save(self,user_obj):
 		bio = self.cleaned_data['bio']
 		city = self.cleaned_data['city']
-		games = self.cleaned_data['game']
+		
 
 		# This creates the user object that we are working with. 
 		user_int = int(user_obj.id)
@@ -69,6 +70,7 @@ class InfoForm(forms.Form):
 
 		# Use this section to update the **Game** information
 		info_obj.games.clear()
+		games = self.cleaned_data['game']
 		for game in games:
 			game_obj = Game.objects.get(game_title=game.game_title)
 			info_obj.games.add(game_obj)
@@ -104,30 +106,30 @@ class ReviewForm(forms.ModelForm):
 			return review
 
 
-class RegisterForm(UserCreationForm):
-	first_name = forms.CharField(label='First Name')
-	last_name = forms.CharField(label='Last Name')
-	email = forms.EmailField(label='Email Address')
-	class Meta:
-		model = User
-		fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-	def save(self, commit=True):
-		user = super(RegisterForm, self).save(commit=False)
-		user.first_name = self.cleaned_data['first_name']
-		user.last_name = self.cleaned_data['last_name']
-		user.email = self.cleaned_data['email']
-		user.set_password(self.cleaned_data['password1'])
+# class RegisterForm(UserCreationForm):
+# 	first_name = forms.CharField(label='First Name')
+# 	last_name = forms.CharField(label='Last Name')
+# 	email = forms.EmailField(label='Email Address')
+# 	class Meta:
+# 		model = User
+# 		fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+# 	def save(self, commit=True):
+# 		user = super(RegisterForm, self).save(commit=False)
+# 		user.first_name = self.cleaned_data['first_name']
+# 		user.last_name = self.cleaned_data['last_name']
+# 		user.email = self.cleaned_data['email']
+# 		user.set_password(self.cleaned_data['password1'])
 
-		# user.Info.bio = ('No Information')
-		# user.Info.Address.street1 = ('Not set')
-		# user.Info.Address.city = ('Not Set')
-		# user.Info.Address.state = ('NA')
-		# user.Info.Address.zipcode = (00000)
+# 		# user.Info.bio = ('No Information')
+# 		# user.Info.Address.street1 = ('Not set')
+# 		# user.Info.Address.city = ('Not Set')
+# 		# user.Info.Address.state = ('NA')
+# 		# user.Info.Address.zipcode = (00000)
 
-		# address_obj = Address.objects.create(street1=None, street2=None, city=None, state=None, zipcode=None)
+# 		# address_obj = Address.objects.create(street1=None, street2=None, city=None, state=None, zipcode=None)
 
-		if commit:
-			user.save()
-			address_obj = Address.objects.create(street1='None', street2='None', city='None', state='zz', zipcode='00000')
-			Info.objects.create(bio = 'No Info Yet', info_user = user, user_address = address_obj)
-			return user
+# 		if commit:
+# 			user.save()
+# 			address_obj = Address.objects.create(street1='None', street2='None', city='None', state='zz', zipcode='00000')
+# 			Info.objects.create(bio = 'No Info Yet', info_user = user, user_address = address_obj)
+# 			return user

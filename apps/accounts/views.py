@@ -60,7 +60,7 @@ def userprofile(request, id=None):
     user_obj = User.objects.get(id=id)
     info_obj = Info.objects.get(info_user = user_obj)
     reviews = Review.objects.filter(review_for = info_obj)
-    events = get_events_nearby(info_obj.get_user_zipcode())
+    events = get_events_nearby(info_obj.get_user_zipcode(), 15)
 
 
     context = {
@@ -73,8 +73,8 @@ def userprofile(request, id=None):
 
     return render(request,'accounts/user.html', context)
 
-def get_events_nearby(zipcode):
-  zips = Distance.objects.all().filter(zipcode1 = 98003, distance__lte = 10)
+def get_events_nearby(zipcode, distance):
+  zips = Distance.objects.all().filter(zipcode1 = zipcode, distance__lte = distance)
   alist = []
   for each in zips:
     alist.append(each.zipcode2)
@@ -118,7 +118,7 @@ class Login(View):
         user2 = User.objects.get(username=username)
         request.session['user_id'] = user2.id
         # messages.success(request, "Successfully logged in")
-        return redirect('/')
+        return redirect('/user/'+ str(user2.id))
       else:
           messages.error(request, "Invalid")
           return redirect('/')
@@ -153,7 +153,7 @@ class Register(View):
       user2 = User.objects.get(username=username)
       request.session['user_id'] = user2.id
       # messages.success(request, "Successfully Registered")
-      return redirect('/')
+      return redirect('/user/' + str(user2.id))
 
     else:
       messages.error(request, form.errors)

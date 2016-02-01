@@ -13,47 +13,7 @@ import random
 from django.utils import timezone
 Game = apps.get_app_config('games').models['game']
 
-# def index(request):
-# 	#populating the events field
 
-# 	zipcodes = open('zipcode.txt')
-# 	count = 0
-# 	for line in zipcodes:
-# 		for i in range(3):
-# 			zipcode1, lat1, lon1, = (item.strip() for item in line.split(',', 2))
-
-# 			WORDS = ("python", "jumble", "easy", "difficult", "answer",  "xylophone", "fun", "Party", "games", "event", "friends", "thinking", "free", "horse")
-# 			event_name = ''
-# 			for i in range(3):
-# 				event_name += random.choice(WORDS) + ' '
-
-# 			time = timezone.now()
-
-# 			seats = random.randint(2,8)
-
-# 			description = ''
-# 			for i in range(5):
-# 				description += random.choice(WORDS) + ' '
-
-# 			user_obj = User.objects.get(id=3)
-
-# 			event=Event.objects.create(event_name=event_name, time=time, seats=seats,description=description, seats_filled = 0, host=user_obj)
-
-# 			# Adding each game selected to the event.
-# 			game_obj = Game.objects.get(game_title="Dominion")
-# 			event.games.add(game_obj)
-
-# 			street1 = '123 Main Street'
-# 			street2 = 'Apt 21'
-# 			city = 'Nearby'
-# 			state = 'EX'
-# 			zipcode = zipcode1
-
-# 			location = Location.objects.create(event=event, street1=street1, street2=street2, city=city, state=state, zipcode=zipcode )
-# 		count +=1
-# 		if count % 1000 == 0:
-# 			print zipcode1
-# 	print "EVENTS HAVE BEEN PLACED"
 
 class EventListView(ListView):
 	model = Event
@@ -98,6 +58,20 @@ class Success(View):
 	def get(self, request):
 		return render(request, 'events/success.html')
 		
+
+def events_near_zip(request, zipcode = 98003, distance = 25):
+  zips = Distance.objects.all().filter(zipcode1 = zipcode, distance__lte = distance)
+  alist = []
+  for each in zips:
+    alist.append(each.zipcode2)
+  events = Event.objects.all().filter(location__zipcode__in = alist)
+
+  return render(request, 'events/nearby.html', {'events':events})
+
+def event_search(request):
+	zipcode = request.POST['zipcode']
+	distance = request.POST['distance']
+	return redirect('/events/nearby/' + str(zipcode) + '/' + str(distance))
 
 
 # class Participant_Entry(View):
@@ -164,3 +138,49 @@ class Success(View):
 #     km = 6367 * c
 #     miles = km / 1.60934
 #     return miles
+
+#################################################
+# Populating events to test searching code below
+#################################################
+
+# def index(request):
+# 	#populating the events field
+
+# 	zipcodes = open('zipcode.txt')
+# 	count = 0
+# 	for line in zipcodes:
+# 		for i in range(3):
+# 			zipcode1, lat1, lon1, = (item.strip() for item in line.split(',', 2))
+
+# 			WORDS = ("python", "jumble", "easy", "difficult", "answer",  "xylophone", "fun", "Party", "games", "event", "friends", "thinking", "free", "horse")
+# 			event_name = ''
+# 			for i in range(3):
+# 				event_name += random.choice(WORDS) + ' '
+
+# 			time = timezone.now()
+
+# 			seats = random.randint(2,8)
+
+# 			description = ''
+# 			for i in range(5):
+# 				description += random.choice(WORDS) + ' '
+
+# 			user_obj = User.objects.get(id=3)
+
+# 			event=Event.objects.create(event_name=event_name, time=time, seats=seats,description=description, seats_filled = 0, host=user_obj)
+
+# 			# Adding each game selected to the event.
+# 			game_obj = Game.objects.get(game_title="Dominion")
+# 			event.games.add(game_obj)
+
+# 			street1 = '123 Main Street'
+# 			street2 = 'Apt 21'
+# 			city = 'Nearby'
+# 			state = 'EX'
+# 			zipcode = zipcode1
+
+# 			location = Location.objects.create(event=event, street1=street1, street2=street2, city=city, state=state, zipcode=zipcode )
+# 		count +=1
+# 		if count % 1000 == 0:
+# 			print zipcode1
+# 	print "EVENTS HAVE BEEN PLACED"

@@ -1,0 +1,36 @@
+{% extends "events/base.html" %}
+{% block main_content %}
+<h1>Events</h1>
+<form action="/events/search/" method="POST">
+	{% csrf_token %}
+	Zipcode: <input type="number" name='zipcode'>
+	Search Radius: <input type="number" name='distance'>
+	<input type='submit' value='Search'>
+</form>
+
+	<table class="table table-striped">
+		<tr>
+			<th>Event Name</th>
+			<th>Description</th>
+			<th>Seats Taken</th>
+			<th>Games to play</th>
+			<th>Distance from you</th>
+		</tr>
+	    {% for event in events %}
+	    <tr>
+	    	<td><a href='/events/view/{{event.id}}'>{{event.event_name}}</a></td>
+	    	<td>{{event.description}}</td>
+	    	<td>{{event.seats_filled}}/{{event.seats}}</td>
+	    	<td> {{event.games.game_title}}
+	    		{% for game in event.games.all %}
+	    			{{game.game_title}} /
+	    		{% endfor %}
+	    	</td>
+	    	<td>Working on this</td>
+	    </tr>
+	    {% empty %}
+	       
+	    {% endfor %}
+	</table>
+
+{% endblock %}
