@@ -8,6 +8,9 @@
 	<input type='submit' value='Search'>
 </form>
 
+{% for each in distances %}
+	
+{% endfor %}
 	<table class="table table-striped">
 		<tr>
 			<th>Event Name</th>
@@ -26,7 +29,14 @@
 	    			{{game.game_title}} /
 	    		{% endfor %}
 	    	</td>
-	    	<td>Working on this</td>
+	    	<td>{% with zip=event.location.zipcode %}
+	    		{% for each in distances %}
+	    			{{ distances.each }}
+					{% if each == zip %}
+						{{ each.value }}
+					{% endif %}
+				{% endfor %}
+	    	{% endwith %}</td>
 	    </tr>
 	    {% empty %}
 	       

@@ -82,6 +82,11 @@ class Distance(models.Model):
 		results = self.objects.filter(zipcode1 = zipcode).filter(distance__lte = dist)
 		return results
 
+	def get_distance(self, zipcode1, zipcode2):
+		results = self.objects.filter(zipcode1 = zipcode1, zipcode2 = zipcode2)
+		distance = results.distance
+		return distance
+
 	def __str__(self):
 		return self.zipcode1
 	class Meta:

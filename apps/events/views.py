@@ -62,11 +62,18 @@ class Success(View):
 def events_near_zip(request, zipcode = 98003, distance = 25):
   zips = Distance.objects.all().filter(zipcode1 = zipcode, distance__lte = distance)
   alist = []
+  distances = {}
+  
   for each in zips:
     alist.append(each.zipcode2)
+    if not each.zipcode2 in distances:
+    	distances[each.zipcode2] = each.distance
+
   events = Event.objects.all().filter(location__zipcode__in = alist)
 
-  return render(request, 'events/nearby.html', {'events':events})
+
+
+  return render(request, 'events/nearby.html', {'events':events, 'distances':distances})
 
 def event_search(request):
 	zipcode = request.POST['zipcode']

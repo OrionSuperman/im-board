@@ -2,6 +2,11 @@
 
 	
 	{% block main_content %}
+	{% if request.session.user_id %}
+
+	<img src='static/accounts/bravo.png'>
+
+	{% else %}
 	<h1>Login Here!</h1>
 	<form action="{% url 'accounts-login' %}" method="POST">
 		{% csrf_token %}
@@ -18,6 +23,8 @@
 		{{register_form.as_p}}
 		<input type='submit' value='Register'>
 	</form>
+
+	{% endif %}
 	{% endblock main_content %}
 
 
