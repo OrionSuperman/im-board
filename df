@@ -1,0 +1,146 @@
+[33mcommit 2bf80da7484494e1f9b814c069c5bf707d50a8bf[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Sat Jan 30 17:39:38 2016 -0800
+
+    about to do weird things to clear a database, saving for safety
+
+[33mcommit 26b494fbb09b42205ffe2b8e2122b8bb18b1374d[m
+Merge: 44ca3ba 465be21
+Author: Orion Supergan <Orionsuperman@gmail.com>
+Date:   Sat Jan 30 14:11:16 2016 -0800
+
+    Merge pull request #4 from garikkosai/master
+    
+    Added review information
+
+[33mcommit 465be21ac72e1f3e2d2b7374801b1ebe9430e72d[m
+Author: Garik Kosai <garik@Gariks-MBP.hsd1.wa.comcast.net>
+Date:   Sat Jan 30 14:09:57 2016 -0800
+
+    Added review information
+
+[33mcommit 44ca3bab9d50bcd2e43e6d5ced44a92d8882823d[m
+Merge: f27e96f db954c5
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Sat Jan 30 13:55:47 2016 -0800
+
+    Merge branch 'master' of https://github.com/OrionSuperman/im-board
+    
+    Merge to get updated work from other contributors.
+
+[33mcommit f27e96f25be935938e25e56c823b8da2ff38a6a5[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Sat Jan 30 13:53:29 2016 -0800
+
+    testing with user profile pages lead to improvements
+
+[33mcommit db954c5dd97c3bcc8c5880e6d5e738b8bb2d68b0[m
+Merge: 5ae6189 ff789fb
+Author: Orion Supergan <Orionsuperman@gmail.com>
+Date:   Fri Jan 29 19:12:24 2016 -0800
+
+    Merge pull request #3 from garikkosai/master
+    
+    Added review app information. Need to transfer into accounts apps
+
+[33mcommit 5ae61899657cd687e3815437f99c5e101357b1b5[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Fri Jan 29 19:11:44 2016 -0800
+
+    user profile page v1
+
+[33mcommit ff789fb95d0f3e44152921abe026d53566a1dbeb[m
+Author: Garik Kosai <garik@Gariks-MBP.hsd1.wa.comcast.net>
+Date:   Fri Jan 29 18:58:43 2016 -0800
+
+    Added review app information. Need to transfer into accounts apps
+
+[33mcommit f165b9c231781f87a560a0f5d5bdd82120ddd370[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Fri Jan 29 16:45:10 2016 -0800
+
+    Working accounts app, lacks game integration
+
+[33mcommit f1e8be49bc32e1b7b20c83e67551cd1245b520a9[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Fri Jan 29 07:07:44 2016 -0800
+
+    working progress on events
+
+[33mcommit 2930dc8d0af2b1a44ac3eebcd2173e868656cdeb[m
+Merge: 809ecb4 77fc729
+Author: Orion Supergan <Orionsuperman@gmail.com>
+Date:   Thu Jan 28 17:59:17 2016 -0800
+
+    Merge pull request #2 from garikkosai/master
+    
+    User profile added, registration updated
+
+[33mcommit 809ecb442636e0f58e5b4b24dcf02f8d65bb41aa[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Thu Jan 28 17:58:03 2016 -0800
+
+    added games to events app
+
+[33mcommit 77fc729f8ea8535c7b5adab38cbf07b0f4ad641e[m
+Author: Garik Kosai <garik@Gariks-MBP.hsd1.wa.comcast.net>
+Date:   Thu Jan 28 17:58:03 2016 -0800
+
+    User profile added, registration updated
+
+[33mcommit 54761f22170dbdc1ba570015a5da12c3109e8495[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Thu Jan 28 10:51:14 2016 -0800
+
+    initial add of games app
+
+[33mcommit 13caf1d7c2d19dff745b7021c7d36fbe0a59095e[m
+Merge: 8456cb6 6df6d86
+Author: Orion Supergan <Orionsuperman@gmail.com>
+Date:   Thu Jan 28 09:53:44 2016 -0800
+
+    Merge pull request #1 from garikkosai/master
+    
+    Fixed login registration
+
+[33mcommit 6df6d86168674fee1e9a50b02b84aca5fbeaa61b[m
+Author: Garik Kosai <garik@Gariks-MBP.hsd1.wa.comcast.net>
+Date:   Thu Jan 28 09:52:07 2016 -0800
+
+    Fixed login registration
+
+[33mcommit 8456cb6cbb0e696316cdca08cdc5760928aad722[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Thu Jan 28 08:49:30 2016 -0800
+
+    added zipcode database with relation of all within 10 miles
+
+[33mcommit fcd7709db5fb05b94f7ee44660a69621745725e5[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Thu Jan 28 06:27:11 2016 -0800
+
+    added in the events app
+
+[33mcommit e26ed9b398e27db9cbbb81e4851b3e3d4742c7b9[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Wed Jan 27 15:00:59 2016 -0800
+
+    before zipcode database distance creation
+
+[33mcommit ab4d4024f6a3bdaf9c24d315e78ae44cb83f61e0[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Wed Jan 27 10:47:50 2016 -0800
+
+    changed server to PostgreSQL for geolocation
+
+[33mcommit b38e9ddecc8f5563de34dbdac66d0069fdafc93a[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Wed Jan 27 07:35:47 2016 -0800
+
+    added checklist.txt to keep track of features to implement
+
+[33mcommit b5d51036acfecb900ae69fbea030e4b21aa337e8[m
+Author: Orion Supergan <orionsuperman@gmail.com>
+Date:   Tue Jan 26 19:07:24 2016 -0800
+
+    initial commit, basic login/registration working

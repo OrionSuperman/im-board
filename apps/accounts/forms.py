@@ -62,7 +62,7 @@ class InfoForm(forms.Form):
 		# Use this section to update the **Info** information
 		print '*' * 100
 		print user_obj
-		info_obj = Info.objects.get(info_user = User.objects.get(id=22))
+		info_obj = Info.objects.get(info_user = user_obj)
 		info_obj.bio=bio
 		
 		info_obj.save()
@@ -117,12 +117,17 @@ class RegisterForm(UserCreationForm):
 		user.last_name = self.cleaned_data['last_name']
 		user.email = self.cleaned_data['email']
 		user.set_password(self.cleaned_data['password1'])
-		user.Info.bio = ('No Information')
-		user.Info.Address.street1 = ('Not set')
-		user.Info.Address.city = ('Not Set')
-		user.Info.Address.state = ('NA')
-		user.Info.Address.zipcode = (00000)
+
+		# user.Info.bio = ('No Information')
+		# user.Info.Address.street1 = ('Not set')
+		# user.Info.Address.city = ('Not Set')
+		# user.Info.Address.state = ('NA')
+		# user.Info.Address.zipcode = (00000)
+
+		# address_obj = Address.objects.create(street1=None, street2=None, city=None, state=None, zipcode=None)
 
 		if commit:
 			user.save()
+			address_obj = Address.objects.create(street1='None', street2='None', city='None', state='zz', zipcode='00000')
+			Info.objects.create(bio = 'No Info Yet', info_user = user, user_address = address_obj)
 			return user

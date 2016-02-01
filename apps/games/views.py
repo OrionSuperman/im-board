@@ -15,5 +15,9 @@ class GameListView(ListView):
 		context = super(GameListView, self).get_context_data(**kwargs)
 		return context
 
-# class GameDetailView(DetailView):
-# 	
+class GameDetailView(DetailView):
+	model = Game
+	template_name = 'games/detail.html'
+	def get_context_data(self, **kwargs):
+		context = super(GameDetailView, self).get_context_data(**kwargs)
+		return context

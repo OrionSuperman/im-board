@@ -1,0 +1,29 @@
+{% extends "games/base.html" %}
+
+{% block main_content %}
+	<h1>Events</h1>
+	<table class="table table-striped">
+		<tr>
+			<th>Event Name</th>
+			<th>Description</th>
+			<th>Seats Taken</th>
+			<th>Games to play</th>
+			
+		</tr>
+	    {% for event in object_list %}
+	    <tr>
+	    	<td><a href='/events/view/{{event.id}}'>{{event.event_name}}</a></td>
+	    	<td>{{event.description}}</td>
+	    	<td>{{event.seats_filled}}/{{event.seats}}</td>
+	    	<td> {{event.games.game_title}}
+	    		{% for game in event.games.all %}
+	    			{{game.game_title}} /
+	    		{% endfor %}
+	    	</td>
+
+	    </tr>
+	    {% empty %}
+	       
+	    {% endfor %}
+	</table>
+{% endblock %}

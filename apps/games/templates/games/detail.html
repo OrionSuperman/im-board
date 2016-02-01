@@ -1,0 +1,16 @@
+{% extends "games/base.html" %}
+
+{% block main_content %}
+	<h1>{{context.game_title}}</h1>
+
+	<p>Suitable for {{context.min_players}} to {{context.max_players}}</p>
+	<p>Game Image: {{context.image}}</p>
+	<p>Game Length: {{context.game_length}}</p>
+	<p>Description: {{context.description}}</p>
+	<p>Game Categories:
+	{% for category in game.game_type.all %}
+		{{category.category}} /
+	{% endfor %}
+	</p>
+	
+{% endblock %}

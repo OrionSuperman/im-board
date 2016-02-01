@@ -21,6 +21,11 @@
   <p>{{review.review}} by {{review.review_by}}</p>
 {% endfor %}
 
+<h3>Games nearby</h3>
+{% for event in events %}
+  <p>{{event.event_name}}</p>
+{% endfor %}
+
 
 {% if request.session.user_id == user.id %}
 <h3>Personal Info, not seen by anyone other than you</h3>

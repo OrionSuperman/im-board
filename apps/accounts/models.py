@@ -13,10 +13,10 @@ GameType = apps.get_app_config('games').models['gametype']
 
 
 class Address(models.Model):
-	street1 = models.CharField(max_length=100, default="")
-	street2 = models.CharField(max_length=100, default="")
-	city = models.CharField(max_length=100, default="")
-	state = models.CharField(max_length=2, default="")
+	street1 = models.CharField(max_length=100, default="none")
+	street2 = models.CharField(max_length=100, default="none")
+	city = models.CharField(max_length=100, default="none")
+	state = models.CharField(max_length=2, default="none")
 	zipcode = models.IntegerField()
 	# user = models.OneToOneField(Info)
 
@@ -24,9 +24,13 @@ class Address(models.Model):
 class Info(models.Model):
 	bio = models.CharField(max_length=200, default="Bio is not Set")
 	info_user = models.OneToOneField(User)
-	address = models.OneToOneField(Address)
+	user_address = models.OneToOneField(Address)
 	games = models.ManyToManyField(Game)
 	reviews = models.ManyToManyField('self', through='Review', symmetrical=False, related_name='related_to')
+
+	def get_user_zipcode(self):
+		return self.user_address.zipcode
+
 	def __str__(self):
 		return self.info_user.username
 	class Meta:

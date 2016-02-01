@@ -8,14 +8,17 @@ from django.contrib.auth import login, logout, authenticate, forms
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, InfoForm, ReviewForm
 from .models import Info, Review, Address
-
+from django.apps import apps
+Event = apps.get_app_config('events').models['event']
+Distance = apps.get_app_config('events').models['distance']
 
  # inserted this line
 #from apps.appname.forms import FormName
 #from .models import THE, NAMES, OF, MODELS
 def index(request):
   review_form = ReviewForm()
-  review = Review.objects.filter(review_for = request.user)
+  # info_obj = Info.objects.get(info_user = request.user)
+  # review = Review.objects.filter(review_for = info_obj)
   #this first fetch is to get all, and in html, we can filter through an if statement. The second fetch uses filtering.
 
   login_form = forms.AuthenticationForm
@@ -25,9 +28,10 @@ def index(request):
   'login_form':login_form(),
   'register_form':register_form(),
   'users':users,
-  'review':review,
-  'review_form':review_form,
+  # 'review':review,
+  # 'review_form':review_form,
   }
+ 
   return render(request, 'accounts/index.html',context) # updated this line 
 
 
@@ -56,16 +60,27 @@ def userprofile(request, id=None):
     user_obj = User.objects.get(id=id)
     info_obj = Info.objects.get(info_user = user_obj)
     reviews = Review.objects.filter(review_for = info_obj)
-   
+    events = get_events_nearby(info_obj.get_user_zipcode())
+
 
     context = {
     'form': form,
     'user': user,
     'review_form':review_form,
     'reviews' : reviews,
+    'events' : events,
     }
 
     return render(request,'accounts/user.html', context)
+
+def get_events_nearby(zipcode):
+  zips = Distance.objects.all().filter(zipcode1 = 98003, distance__lte = 10)
+  alist = []
+  for each in zips:
+    alist.append(each.zipcode2)
+  events = Event.objects.all().filter(location__zipcode__in = alist)
+
+  return events
 
 def userupdate(request, id=None):
   print " update"
@@ -130,6 +145,8 @@ class Register(View):
     return render(request, 'accounts/index.html', context)
   def post(self, request):
     form = self.form(request.POST)
+    print '*' * 100
+    print form.is_valid()
     if form.is_valid():
       username = form.cleaned_data['username']
       form.save()
@@ -139,7 +156,7 @@ class Register(View):
       return redirect('/')
 
     else:
-      messages.error(request, "Invalid Registration")
+      messages.error(request, form.errors)
       return redirect('/')
 
 
